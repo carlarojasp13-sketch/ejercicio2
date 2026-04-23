@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import './App.css'
 
 function App() {
   const [pet, setPet] = useState('')
@@ -29,20 +30,23 @@ function App() {
 
     if (pet === '') {
       nuevoError.pet = 'Campo Obligatorio'
+    }
 
-      if (vet === '') {
-        nuevoError.vet = 'Campo Obligatorio'
+    if (vet === '') {
+      nuevoError.vet = 'Campo Obligatorio'
+    }
 
-        if (motive === '') {
-          nuevoError.motive = 'Campo Obligatorio'
+    if (motive === '') {
+      nuevoError.motive = 'Campo Obligatorio'
+    }
 
-          if (owner === '') {
-            nuevoError.owner = 'Campo Obligatorio'
-            setError(nuevoError)
-            return
-          }
-        }
-      }
+    if (owner === '') {
+      nuevoError.owner = 'Campo Obligatorio'
+    }
+    setError(nuevoError)
+
+    if (nuevoError.pet || nuevoError.vet || nuevoError.motive || nuevoError.owner) {
+      return
     }
 
     const nuevoTurno = {
@@ -58,26 +62,76 @@ function App() {
 
   return (
     <div>
-      <form className="formualario" onSubmit={agregarTurno}>
-        <button type="submit">Agregar</button>
+      <form className="formulario" onSubmit={agregarTurno}>
         <div className="campos">
-          <input type="text" placeholder="Pet Name" value={pet} onChange={e => setPet(e.target.value)} />
-          {error.pet && <p style={{ color: 'red' }}>{error.pet}</p>}
+          <input
+            className={error.pet ? 'input errorInput' : 'input'}
+            type="text"
+            placeholder="Pet Name"
+            value={pet}
+            onChange={e => {
+              setPet(e.target.value)
+              setError({
+                ...error,
+                pet: '',
+              })
+            }}
+          />
+          <p className="errorTexto">{error.pet}</p>
         </div>
         <div className="campos">
-          <input type="text" placeholder="Vet" value={vet} onChange={e => setVet(e.target.value)} />
-          {error.vet && <p style={{ color: 'red' }}>{error.vet}</p>}
+          <input
+            className={error.vet ? 'input errorInput' : 'input'}
+            type="text"
+            placeholder="Vet"
+            value={vet}
+            onChange={e => {
+              setVet(e.target.value)
+              setError({
+                ...error,
+                vet: '',
+              })
+            }}
+          />
+          <p className="errorTexto">{error.vet}</p>
         </div>
         <div className="campos">
-          <input type="text" placeholder="Motive" value={motive} onChange={e => setMotive(e.target.value)} />
-          {error.motive && <p style={{ color: 'red' }}>{error.motive}</p>}
+          <input
+            className={error.motive ? 'input errorInput' : 'input'}
+            type="text"
+            placeholder="Motive"
+            value={motive}
+            onChange={e => {
+              setMotive(e.target.value)
+              setError({
+                ...error,
+                motive: '',
+              })
+            }}
+          />
+          <p className="errorTexto">{error.motive}</p>
         </div>
         <div className="campos">
           <input type="date" value={date} onChange={e => setDate(e.target.value)} />
         </div>
         <div className="campos">
-          <input type="text" placeholder="Owner" value={owner} onChange={e => setOwner(e.target.value)} />
-          {error.owner && <p style={{ color: 'red' }}>{error.owner}</p>}
+          <input
+            className={error.owner ? 'input errorInput' : 'input'}
+            type="text"
+            placeholder="Owner"
+            value={owner}
+            onChange={e => {
+              setOwner(e.target.value)
+              setError({
+                ...error,
+                owner: '',
+              })
+            }}
+          />
+          <p className="errorTexto">{error.owner}</p>
+          <button className="boton" type="submit">
+            Agregar
+          </button>
         </div>
       </form>
 
