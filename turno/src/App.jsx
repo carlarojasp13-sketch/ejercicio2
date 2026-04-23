@@ -24,13 +24,25 @@ function App() {
       vet: '',
       motive: '',
       date: '',
-      owner: ''
+      owner: '',
     }
 
     if (pet === '') {
       nuevoError.pet = 'Campo Obligatorio'
-      setError(nuevoError)
-      return
+
+      if (vet === '') {
+        nuevoError.vet = 'Campo Obligatorio'
+
+        if (motive === '') {
+          nuevoError.motive = 'Campo Obligatorio'
+
+          if (owner === '') {
+            nuevoError.owner = 'Campo Obligatorio'
+            setError(nuevoError)
+            return
+          }
+        }
+      }
     }
 
     const nuevoTurno = {
@@ -41,22 +53,33 @@ function App() {
       owner: owner,
     }
     setTurnos([...turnos, nuevoTurno])
-    ;(setPet(''), setVet(''), setMotive(''), setDate(''), setOwner(''), setError(''))
+    ;(setPet(''), setVet(''), setMotive(''), setDate(''), setOwner(''))
   }
 
   return (
     <div>
-      <form onSubmit={agregarTurno}>
+      <form className="formualario" onSubmit={agregarTurno}>
         <button type="submit">Agregar</button>
-        <input type="text" placeholder="Pet Name" value={pet} onChange={e => setPet(e.target.value)} />
-        {error.pet && <p style={{ color: 'red' }}>{error.pet}</p>}
-        <input type="text" placeholder="Vet" value={vet} onChange={e => setVet(e.target.value)} />
-        <input type="text" placeholder="Motive" value={motive} onChange={e => setMotive(e.target.value)} />
-        <input type="date" value={date} onChange={e => setDate(e.target.value)} />
-        <input type="text" placeholder="Owner" value={owner} onChange={e => setOwner(e.target.value)} />
+        <div className="campos">
+          <input type="text" placeholder="Pet Name" value={pet} onChange={e => setPet(e.target.value)} />
+          {error.pet && <p style={{ color: 'red' }}>{error.pet}</p>}
+        </div>
+        <div className="campos">
+          <input type="text" placeholder="Vet" value={vet} onChange={e => setVet(e.target.value)} />
+          {error.vet && <p style={{ color: 'red' }}>{error.vet}</p>}
+        </div>
+        <div className="campos">
+          <input type="text" placeholder="Motive" value={motive} onChange={e => setMotive(e.target.value)} />
+          {error.motive && <p style={{ color: 'red' }}>{error.motive}</p>}
+        </div>
+        <div className="campos">
+          <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+        </div>
+        <div className="campos">
+          <input type="text" placeholder="Owner" value={owner} onChange={e => setOwner(e.target.value)} />
+          {error.owner && <p style={{ color: 'red' }}>{error.owner}</p>}
+        </div>
       </form>
-        
-          
 
       {turnos.map((turno, index) => (
         <div key={index}>
